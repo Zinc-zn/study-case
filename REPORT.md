@@ -1,4 +1,4 @@
-# Hasil laporan kelompok 4
+# Hasil laporan kelompok 4 (CAse Method 2)
 
 |  | Anggota kelompok & Pembagian Tugas | |
 |--|--|--| 
