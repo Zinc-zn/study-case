@@ -99,18 +99,26 @@ public class MainSiakad {
     static void urutkanJadwal() {
         String[] urutanHari = {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
 
-        // Sorting pakai Comparator lambda
-        Arrays.sort(dataJadwal, (j1, j2) -> {
-            int bandingHari = Integer.compare(
-                getIndexHari(j1.hari, urutanHari),
-                getIndexHari(j2.hari, urutanHari)
-            );
-            if (bandingHari != 0) {
-                return bandingHari;
-            } else {
-                return j1.jam.compareTo(j2.jam);
+        
+        for (int i = 0; i < dataJadwal.length-1; i++) {
+            for (int j = 0; j < dataJadwal.length-1-i; j++) {
+                int bandingHari = getIndexHari(dataJadwal[j].hari, urutanHari)-getIndexHari(dataJadwal[j+1].hari, urutanHari);
+                if (bandingHari >0) {
+                    Jadwal temp = dataJadwal[j];
+                    dataJadwal[j]=dataJadwal[j+1];
+                    dataJadwal[j+1]=temp;
+                }else if (bandingHari==0) {
+                    int bandingJam = compareJam(dataJadwal[j].jam, dataJadwal[j + 1].jam);
+                
+                    if (bandingJam>0) {
+                        Jadwal temp = dataJadwal[j];
+                        dataJadwal[j]= dataJadwal[j+1];
+                        dataJadwal[j+1]=temp;
+
+                    }
+                }
             }
-        });
+        }
 
         // Output hasil sorting
         System.out.println("=== JADWAL KULIAH TERURUT (Hari & Jam) ===");
@@ -123,40 +131,49 @@ public class MainSiakad {
         for (int i = 0; i < urutanHari.length; i++) {
             if (urutanHari[i].equalsIgnoreCase(hari)) return i;
         }
-        return 0;
+        return 999;
+    }
+    static int compareJam(String jam1, String jam2) {
+       
+        String[] splitJam1 = jam1.split(":");
+        String[] splitJam2 = jam2.split(":");
+        
+       
+        int jamCompare = Integer.parseInt(splitJam1[0]) - Integer.parseInt(splitJam2[0]);
+        
+       
+        if (jamCompare == 0) {
+            return Integer.parseInt(splitJam1[1]) - Integer.parseInt(splitJam2[1]);
+        }
+        return jamCompare;
     }
 
     static void cariJadwal(String namaDosen) {
-        System.out.println("=== HASIL PENCARIAN JADWAL DOSEN: " + namaDosen + " ===");
-        
+        System.out.println("=== HASIL PENCARIAN JADWAL ===");
+    
         boolean ditemukan = false;
         int counter = 0;
-        
+    
         for (int i = 0; i < dataJadwal.length; i++) {
             counter++;
-            
-            if (dataJadwal[i].dosen.namaDosen.toLowerCase().contains(namaDosen.toLowerCase())) {
-                if (!ditemukan) {
-                    System.out.println("\nJadwal yang ditemukan:");
-                    ditemukan = true;
-                }
-                
-                // Menampilkan jadwal yang ditemukan
-                System.out.println("- " + dataJadwal[i].hari + ", " + dataJadwal[i].jam + 
-                                 " | Dosen: " + dataJadwal[i].dosen.namaDosen + 
-                                 " | Mata Kuliah: " + dataJadwal[i].mataKuliah.namaMK + 
-                                 " (" + dataJadwal[i].mataKuliah.sks + " SKS)");
+    
+            if (dataJadwal[i].dosen.namaDosen.equalsIgnoreCase(namaDosen)) {
+                ditemukan = true;
+    
+                System.out.println("Dosen: " + dataJadwal[i].dosen.namaDosen);
+                System.out.println("Mata Kuliah: " + dataJadwal[i].mataKuliah.namaMK);
+                System.out.println("Hari: " + dataJadwal[i].hari);
+                System.out.println("Jam: " + dataJadwal[i].jam);
+                System.out.println();
             }
         }
-        
-        // Menampilkan informasi hasil pencarian
+    
         if (!ditemukan) {
             System.out.println("Tidak ditemukan jadwal untuk dosen dengan nama: " + namaDosen);
         }
-        
-        // Menampilkan informasi kompleksitas pencarian
-        System.out.println("\nInformasi Pencarian:");
-        System.out.println("- Jumlah data yang diperiksa: " + dataJadwal.length);
-        System.out.println("- Jumlah iterasi pencarian: " + counter);
+    
+        // (opsional) info debug:
+        // System.out.println("Jumlah iterasi: " + counter);
     }
+    
 }

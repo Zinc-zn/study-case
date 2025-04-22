@@ -2,9 +2,9 @@
 
 |  | Anggota kelompok & Pembagian Tugas | |
 |--|--|--| 
-| Mochammad Rijal Dzaki Rifki Afifudin| 244107020240 |  class MataKuliah, case 2, case 5, laporan |
-| Sahrul Ramadhani| 244107020058| class Jadwal, class MainSiakad, case 3 |
-| Fata Haidar Aly| 24410020108 | class Dosen, case 1, case 4 |
+| Mochammad Rijal Dzaki Rifki Afifudin| 244107020240 |  class MataKuliah, case 5, laporan |
+| Sahrul Ramadhani| 244107020058| class Jadwal, class MainSiakad, case 1, case 2, case 3 |
+| Fata Haidar Aly| 24410020108 | class Dosen, case 4 |
 
 ## Case 1
 Case 1 di implementasikan pada class Dosen.java, berikut adalah hasil dari case 1 :
